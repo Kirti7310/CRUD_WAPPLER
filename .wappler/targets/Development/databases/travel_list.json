@@ -42,6 +42,18 @@
               "nullable": true
             }
           }
+        },
+        "db_changes": [
+          {
+            "recid": 6,
+            "catg_name": "Train",
+            "catg_desc": "Vacation",
+            "price": "900",
+            "__newRec": true
+          }
+        ],
+        "status": {
+          "data_modified": true
         }
       }
     },
