@@ -2,7 +2,7 @@ Wappler CRUD with Category Toggle
 
 This project is a simple CRUD (Create, Read, Update, Delete) application built using Wappler with MySQL. It allows users to manage categories with a toggle feature to insert new records.
 
-🚀 Features
+Features
 
 Add a Category (Toggle form for inserting records)
 
