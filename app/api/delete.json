@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ],
+    "$_POST": [
+      {
+        "type": "number",
+        "fieldName": "ID",
+        "name": "id"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "delete_cat",
+      "module": "dbupdater",
+      "action": "delete",
+      "options": {
+        "connection": "travel_list",
+        "sql": {
+          "type": "delete",
+          "table": "catg",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "ID",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_POST.ID}}",
+                "data": {
+                  "column": "ID"
+                },
+                "operation": "="
+              }
+            ]
+          },
+          "returning": "ID",
+          "query": "delete from `catg` where `ID` = ?",
+          "params": [
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P1",
+              "value": "{{$_POST.ID}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ],
+      "output": true
+    }
+  }
+}

@@ -1,0 +1,99 @@
+<!-- Wappler include head-page="layouts/main" is="dmx-app" id="main_page" appConnect="local" bootstrap5="cdn" components="{dmxDataTraversal:{},dmxBootstrap5Collapse:{},dmxBootstrap5TableGenerator:{},dmxNotifications:{},dmxBrowser:{},dmxFormatter:{}}" -->
+<dmx-data-detail id="data_detail2" dmx-bind:data="categories_server_connect.data.categories_avl_display" key="id"></dmx-data-detail>
+<dmx-data-detail id="data_detail1" dmx-bind:data="categories_server_connect.data.categories_avl_display" key="categories_server_connect.data.categories_avl_display.ID"></dmx-data-detail>
+<div is="dmx-browser" id="browser1"></div>
+<dmx-notifications id="notifies1"></dmx-notifications>
+
+
+<meta name="ac:route" content="/main_page">
+<div class="container">
+
+
+    <div class="row">
+        <div class="col">Category</div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button id="btn1add_category" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapse1_add_category" dmx-bind:disabled="!collapse1_add_category.collapsed">Add New Category&nbsp;</button>
+            <div class="collapse" id="collapse1_add_category" is="dmx-bs5-collapse">
+                <form is="dmx-serverconnect-form" id="serverconnectform1add_catg" method="post" action="/api/upsert_catg" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-on:success="notifies1.success('Insertion Success!');browser1.reload()">
+                    <div class="form-group mb-3 row">
+                        <label for="inp_catg_name" class="col-sm-2 col-form-label">Catg name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inp_catg_name" name="catg_name" aria-describedby="inp_catg_name_help" placeholder="Enter Catg name">
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 row">
+                        <label for="inp_catg_desc" class="col-sm-2 col-form-label">Catg desc</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inp_catg_desc" name="catg_desc" aria-describedby="inp_catg_desc_help" placeholder="Enter Catg desc">
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 row">
+                        <label for="inp_price" class="col-sm-2 col-form-label">Price</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inp_price" name="price" aria-describedby="inp_price_help" placeholder="Enter Price">
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-sm-10">
+                            <button id="btn1canceladdcatg" class="btn btn-secondary" dmx-on:click="collapse1_add_category.hide()" data-bs-target="#collapse1_add_category">Cancel</button><button type="submit" class="btn btn-primary" dmx-bind:disabled="state.executing">saves<span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>Catg name</th>
+                            <th>Catg desc</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="categories_server_connect.data.categories_avl_display" id="tableRepeat1">
+                        <tr dmx-on:click="category_data_detail.select(ID)">
+                            <td dmx-on:click="notifies1.success('sucess')" dmx-class:bg-primary="ID==category_data_detail.data.ID" dmx-text="catg_name" dmx-class:text-light="ID==category_data_detail.data.ID"></td>
+                            <td dmx-text="catg_desc"></td>
+                            <td dmx-text="price"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col">
+            <form is="dmx-serverconnect-form" id="serverconnectform2" method="post" action="/api/delete" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-populate="category_data_detail.data" dmx-on:success="notifies1.success('deleted');browser1.reload()">
+                <input type="hidden" name="ID" id="inp_ID" dmx-bind:value="category_data_detail.data.ID">
+            </form>
+            <form is="dmx-serverconnect-form" id="serverconnectform1" method="post" action="/api/upsert_catg" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-populate="category_data_detail.data" dmx-on:success="notifies1.success('Updated records');browser1.reload()" dmx-show="!category_data_detail.data.isEmpty()">
+                <input type="hidden" name="ID" id="inp_ID" dmx-bind:value="category_data_detail.data.ID">
+                <div class="form-group mb-3">
+                    <label for="inp_catg_name">Catg name</label>
+                    <input type="text" class="form-control" id="inp_catg_name" name="catg_name" dmx-bind:value="category_data_detail.data.catg_name" aria-describedby="inp_catg_name_help" placeholder="Enter Catg name">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="inp_catg_desc">Catg desc</label>
+                    <textarea id="inp_catg_desc" name="catg_desc" dmx-bind:value="category_data_detail.data.catg_desc" class="form-control"></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="inp_price">Price</label>
+                    <input type="number" class="form-control" id="inp_price" name="price" dmx-bind:value="category_data_detail.data.price" aria-describedby="inp_price_help" placeholder="Enter Price">
+                </div>
+                <div class="form-group mb-3">
+
+                    <button type="submit" class="btn btn-primary" dmx-bind:value="category_data_detail.data.Save" dmx-bind:disabled="state.executing">Update<button id="btn1_delete" class="btn btn-danger" dmx-on:click="serverconnectform2.submit();browser1.reload()">Delete</button><span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                </div>
+            </form>
+            <input id="text1" name="text1" type="text" class="form-control d-none" dmx-bind:value="category_data_detail.data.ID">
+
+        </div>
+    </div>
+</div>
+<dmx-serverconnect id="categories_server_connect" url="/api/get_catg"></dmx-serverconnect>
+<dmx-data-detail id="category_data_detail" dmx-bind:data="categories_server_connect.data.categories_avl_display" key="ID" dmx-bind:value="ID"></dmx-data-detail>

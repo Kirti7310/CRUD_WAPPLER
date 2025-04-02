@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "categories_avl_display",
+      "module": "dbconnector",
+      "action": "select",
+      "options": {
+        "connection": "travel_list",
+        "sql": {
+          "type": "select",
+          "columns": [
+            {
+              "table": "catg",
+              "column": "ID"
+            },
+            {
+              "table": "catg",
+              "column": "catg_name"
+            },
+            {
+              "table": "catg",
+              "column": "catg_desc"
+            },
+            {
+              "table": "catg",
+              "column": "price"
+            }
+          ],
+          "params": [],
+          "table": {
+            "name": "catg"
+          },
+          "primary": "ID",
+          "joins": [],
+          "query": "select `ID`, `catg_name`, `catg_desc`, `price` from `catg`",
+          "dir": "",
+          "sort": ""
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "type": "number",
+          "name": "ID"
+        },
+        {
+          "type": "text",
+          "name": "catg_name"
+        },
+        {
+          "type": "text",
+          "name": "catg_desc"
+        },
+        {
+          "type": "number",
+          "name": "price"
+        }
+      ],
+      "outputType": "array"
+    }
+  }
+}

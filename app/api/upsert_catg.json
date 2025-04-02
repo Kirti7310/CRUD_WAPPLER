@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "catg_name",
+        "name": "catg_name"
+      },
+      {
+        "type": "text",
+        "fieldName": "catg_desc",
+        "name": "catg_desc"
+      },
+      {
+        "type": "number",
+        "fieldName": "price",
+        "name": "price"
+      },
+      {
+        "type": "number",
+        "fieldName": "id",
+        "name": "ID"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "update",
+      "module": "dbupdater",
+      "action": "update",
+      "options": {
+        "connection": "travel_list",
+        "sql": {
+          "type": "update",
+          "values": [
+            {
+              "table": "catg",
+              "column": "catg_name",
+              "type": "text",
+              "value": "{{$_POST.catg_name}}"
+            },
+            {
+              "table": "catg",
+              "column": "catg_desc",
+              "type": "text",
+              "value": "{{$_POST.catg_desc}}"
+            },
+            {
+              "table": "catg",
+              "column": "price",
+              "type": "number",
+              "value": "{{$_POST.price}}"
+            }
+          ],
+          "table": "catg",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "ID",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_POST.ID}}",
+                "data": {
+                  "column": "ID"
+                },
+                "operation": "="
+              }
+            ]
+          },
+          "returning": "ID",
+          "query": "update `catg` set `catg_name` = ?, `catg_desc` = ?, `price` = ? where `ID` = ?",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_POST.catg_name}}",
+              "test": ""
+            },
+            {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{$_POST.catg_desc}}",
+              "test": ""
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{$_POST.price}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P4",
+              "value": "{{$_POST.ID}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ],
+      "output": true
+    }
+  }
+}
